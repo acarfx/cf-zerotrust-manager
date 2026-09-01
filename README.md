@@ -1,4 +1,4 @@
-<img width="1170" height="754" alt="image" src="https://github.com/user-attachments/assets/37e9cfa2-4913-4ffc-9171-e78367eaa1e1" /># CF Zero Trust Manager
+# CF Zero Trust Manager
 
 Cloudflare Zero Trust tünelinizdeki subdomain'leri masaüstünden yönetin. Electron tabanlı bir arayüz, arkasında çalışan bir REST API sunucusu ve üç dil desteği (Türkçe / English / Русский) ile gelir.
 
