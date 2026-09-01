@@ -1,3 +1,4 @@
+; Klasik kurulum: kisayol secim sayfasi (varsayilan: ikisi de acik)
 !include "nsDialogs.nsh"
 !include "LogicLib.nsh"
 
@@ -18,8 +19,6 @@ Function ExtraTasksCreate
   ${If} $DoStartMenuShortcut == ""
     StrCpy $DoStartMenuShortcut "1"
   ${EndIf}
-
-  !insertmacro MUI_HEADER_TEXT "Ek gorevler / Additional tasks" "Kisayollari secin. Shortcuts are created by default."
 
   nsDialogs::Create 1018
   Pop $ExtraDialog
