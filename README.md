@@ -1,4 +1,4 @@
-# CF Zero Trust Manager
+<img width="1170" height="754" alt="image" src="https://github.com/user-attachments/assets/37e9cfa2-4913-4ffc-9171-e78367eaa1e1" /># CF Zero Trust Manager
 
 Cloudflare Zero Trust tünelinizdeki subdomain'leri masaüstünden yönetin. Electron tabanlı bir arayüz, arkasında çalışan bir REST API sunucusu ve üç dil desteği (Türkçe / English / Русский) ile gelir.
 
@@ -19,6 +19,20 @@ Bu proje, Cloudflare'da tünel açıp kapatmak, public hostname eklemek ve DNS k
 - **3 dil** — 🇹🇷 Türkçe (varsayılan), 🇬🇧 English, 🇷🇺 Русский
 - **Canlı log** — API sunucusunun istek loglarını anlık izle
 - **Kurulum sihirbazı** — ilk açılışta gerekli Cloudflare bilgilerini adım adım sorar
+
+<img width="1170" height="754" alt="image" src="https://github.com/user-attachments/assets/e320e0c5-ef56-4d20-92af-246510e18aae" />
+<img width="1176" height="757" alt="image" src="https://github.com/user-attachments/assets/3ed556b7-d48d-495f-b199-9704ad1e3836" />
+<img width="1173" height="752" alt="image" src="https://github.com/user-attachments/assets/07b8cb5b-7b42-4ddc-9587-0a9291d14819" />
+<img width="1176" height="753" alt="image" src="https://github.com/user-attachments/assets/90dc868f-7372-4c4d-bb1c-e3d958c9855d" />
+<img width="1175" height="754" alt="image" src="https://github.com/user-attachments/assets/29a93dc8-eb84-480b-a945-059af27a5ccb" />
+<img width="1175" height="759" alt="image" src="https://github.com/user-attachments/assets/6e084c07-0510-4caf-ac64-915f925f9414" />
+
+  
+<img width="1165" height="746" alt="image" src="https://github.com/user-attachments/assets/0dea5a88-fea3-4dfd-8b81-a833ede6c1f0" />
+<img width="1162" height="750" alt="image" src="https://github.com/user-attachments/assets/db866fec-c3fb-49d0-bf96-2305ccc870a6" />
+<img width="1169" height="750" alt="image" src="https://github.com/user-attachments/assets/b5fb3deb-200e-40ab-a842-d0b76b7b80c0" />
+<img width="1173" height="754" alt="image" src="https://github.com/user-attachments/assets/5e2405da-b28e-4cf0-b742-13e2d3999374" />
+<img width="1167" height="748" alt="image" src="https://github.com/user-attachments/assets/4b81b9c4-a384-4fa1-a6f9-a921c0895c81" />
 
 ---
 
