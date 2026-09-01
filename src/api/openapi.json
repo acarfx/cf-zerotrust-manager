@@ -1,0 +1,304 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "CF Zero Trust Manager API",
+    "version": "1.0.0",
+    "description": "Cloudflare Zero Trust tünellerini, public hostname kayıtlarını, yapılandırmayı ve API anahtarlarını yöneten REST API. Korumalı uç noktalar Bearer veya X-API-Key ile çağrılır."
+  },
+  "servers": [{ "url": "/", "description": "Çalışan yerel API sunucusu" }],
+  "tags": [
+    { "name": "Sistem" },
+    { "name": "Cloudflare" },
+    { "name": "Hostnames" },
+    { "name": "Yapılandırma" },
+    { "name": "API Anahtarları" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer" },
+      "apiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+    },
+    "schemas": {
+      "Envelope": {
+        "type": "object",
+        "required": ["success", "result"],
+        "properties": { "success": { "type": "boolean", "example": true }, "result": {} }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["success", "error"],
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": { "type": "string" },
+          "details": { "type": "array", "items": {} }
+        }
+      },
+      "HostnameInput": {
+        "type": "object",
+        "required": ["hostname", "service"],
+        "properties": {
+          "hostname": { "type": "string", "example": "panel.example.com" },
+          "service": { "type": "string", "example": "http://localhost:8080" },
+          "path": { "type": "string", "nullable": true, "example": "/api" },
+          "noTLSVerify": { "type": "boolean", "default": false }
+        }
+      },
+      "ConfigInput": {
+        "type": "object",
+        "properties": {
+          "apiToken": { "type": "string", "format": "password" },
+          "accountId": { "type": "string" },
+          "tunnelId": { "type": "string", "format": "uuid" },
+          "zoneName": { "type": "string" },
+          "defaultService": { "type": "string" },
+          "serverPort": { "type": "integer", "minimum": 1, "maximum": 65535 },
+          "serverHost": { "type": "string" },
+          "ipWhitelist": { "type": "array", "items": { "type": "string" } },
+          "language": { "type": "string", "enum": ["tr", "en", "ru"] }
+        }
+      },
+      "KeyInput": {
+        "type": "object",
+        "required": ["label"],
+        "properties": { "label": { "type": "string", "example": "otomasyon" } }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "API anahtarı eksik veya geçersiz",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Forbidden": {
+        "description": "İstemci IP whitelist dışında",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Failure": {
+        "description": "İstek işlenemedi",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }, { "apiKeyAuth": [] }],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["Sistem"],
+        "summary": "Sunucu sağlık kontrolü",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Sunucu çalışıyor",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Envelope" },
+                "example": {
+                  "success": true,
+                  "result": {
+                    "ok": true,
+                    "status": "healthy",
+                    "service": "cf-zerotrust-manager",
+                    "time": "2026-09-01T12:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/status": {
+      "get": {
+        "tags": ["Cloudflare"],
+        "summary": "Token, hesap ve tünel durumunu getir",
+        "responses": {
+          "200": { "description": "Cloudflare durumu" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/api/accounts": {
+      "get": {
+        "tags": ["Cloudflare"],
+        "summary": "Erişilebilir Cloudflare hesaplarını listele",
+        "responses": {
+          "200": { "description": "Hesap listesi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/tunnels": {
+      "get": {
+        "tags": ["Cloudflare"],
+        "summary": "Hesaptaki tünelleri listele",
+        "responses": {
+          "200": { "description": "Tünel listesi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/zones": {
+      "get": {
+        "tags": ["Cloudflare"],
+        "summary": "DNS zone listesini getir",
+        "responses": {
+          "200": { "description": "Zone listesi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/tunnel/config": {
+      "get": {
+        "tags": ["Cloudflare"],
+        "summary": "Aktif tünel yapılandırmasını getir",
+        "responses": {
+          "200": { "description": "Tünel ingress yapılandırması" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/hostnames": {
+      "get": {
+        "tags": ["Hostnames"],
+        "summary": "Public hostname kayıtlarını listele",
+        "responses": {
+          "200": { "description": "Hostname listesi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "post": {
+        "tags": ["Hostnames"],
+        "summary": "Public hostname oluştur",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HostnameInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Hostname oluşturuldu" },
+          "400": { "$ref": "#/components/responses/Failure" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/hostnames/{hostname}": {
+      "parameters": [
+        { "name": "hostname", "in": "path", "required": true, "schema": { "type": "string" }, "example": "panel.example.com" }
+      ],
+      "put": {
+        "tags": ["Hostnames"],
+        "summary": "Hostname kaydını güncelle",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HostnameInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Hostname güncellendi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "delete": {
+        "tags": ["Hostnames"],
+        "summary": "Hostname ve DNS kaydını kalıcı sil",
+        "responses": {
+          "200": { "description": "Hostname silindi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/hostnames/{hostname}/enable": {
+      "post": {
+        "tags": ["Hostnames"],
+        "summary": "Hostname kaydını etkinleştir",
+        "parameters": [
+          { "name": "hostname", "in": "path", "required": true, "schema": { "type": "string" }, "example": "panel.example.com" }
+        ],
+        "responses": {
+          "200": { "description": "Hostname etkin" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/hostnames/{hostname}/disable": {
+      "post": {
+        "tags": ["Hostnames"],
+        "summary": "Hostname kaydını devre dışı bırak",
+        "parameters": [
+          { "name": "hostname", "in": "path", "required": true, "schema": { "type": "string" }, "example": "panel.example.com" }
+        ],
+        "responses": {
+          "200": { "description": "Hostname devre dışı" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/hostnames/{hostname}/toggle": {
+      "post": {
+        "tags": ["Hostnames"],
+        "summary": "Hostname durumunu değiştir",
+        "parameters": [
+          { "name": "hostname", "in": "path", "required": true, "schema": { "type": "string" }, "example": "panel.example.com" }
+        ],
+        "responses": {
+          "200": { "description": "Durum değiştirildi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/config": {
+      "get": {
+        "tags": ["Yapılandırma"],
+        "summary": "Maskelenmiş yapılandırmayı getir",
+        "responses": {
+          "200": { "description": "Gizli alanları maskelenmiş ayarlar" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "put": {
+        "tags": ["Yapılandırma"],
+        "summary": "İzin verilen ayarları güncelle",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfigInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Ayarlar güncellendi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/keys": {
+      "get": {
+        "tags": ["API Anahtarları"],
+        "summary": "API anahtarlarını gizli değer olmadan listele",
+        "responses": {
+          "200": { "description": "Anahtar listesi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "post": {
+        "tags": ["API Anahtarları"],
+        "summary": "Yeni API anahtarı üret",
+        "description": "Gizli anahtar yalnızca bu yanıt içinde bir kez döner.",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KeyInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Anahtar üretildi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/keys/{id}": {
+      "delete": {
+        "tags": ["API Anahtarları"],
+        "summary": "API anahtarını sil",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Anahtar silindi" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    }
+  }
+}

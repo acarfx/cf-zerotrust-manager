@@ -1,0 +1,58 @@
+{
+  "name": "cf-zerotrust-manager",
+  "version": "1.0.0",
+  "description": "Cloudflare Zero Trust tunnel subdomain manager (Electron GUI + REST API server)",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "server": "node server_cli.js",
+    "icon": "node scripts/make-icon.js",
+    "build": "electron-builder"
+  },
+  "author": "Acarfx <https://github.com/acarfx>",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^32.2.0",
+    "electron-builder": "^24.13.3",
+    "sharp": "^0.35.4"
+  },
+  "build": {
+    "appId": "com.acar.cfzerotrust",
+    "productName": "CF Zero Trust Manager",
+    "copyright": "Copyright (c) 2025 Acarfx",
+    "files": [
+      "src/**/*",
+      "build/icon.png",
+      "build/tray-*.png",
+      "server_cli.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": "CF Zero Trust Manager",
+      "shortcutName": "CF Zero Trust Manager",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "${productName} Setup ${version}.${ext}"
+    }
+  },
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "lucide-static": "^1.39.0",
+    "select2": "^4.1.0-rc.0",
+    "swagger-ui-dist": "^5.32.14",
+    "sweetalert2": "^11.22.2"
+  }
+}

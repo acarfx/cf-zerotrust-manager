@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1b2740"/>
+      <stop offset="1" stop-color="#0d1424"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff9a3d"/>
+      <stop offset="1" stop-color="#f38020"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="240" height="240" rx="56" fill="url(#bg)"/>
+
+  <!-- tunnel outer ring -->
+  <circle cx="128" cy="132" r="66" fill="url(#ring)"/>
+  <circle cx="128" cy="132" r="66" fill="none" stroke="#ffffff" stroke-opacity="0.15" stroke-width="2"/>
+
+  <!-- tunnel opening -->
+  <circle cx="128" cy="132" r="46" fill="#0d1424"/>
+  <circle cx="128" cy="132" r="46" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2"/>
+
+  <!-- inner depth rings -->
+  <circle cx="128" cy="132" r="30" fill="none" stroke="#f38020" stroke-opacity="0.35" stroke-width="3"/>
+  <circle cx="128" cy="132" r="15" fill="#f38020"/>
+
+  <!-- highlight -->
+  <ellipse cx="112" cy="112" rx="26" ry="18" fill="#ffffff" fill-opacity="0.10" transform="rotate(-30 112 112)"/>
+
+  <!-- cloud -->
+  <g transform="translate(150 40)">
+    <path d="M0 34 a14 14 0 0 1 0 -28 a18 18 0 0 1 34 -4 a13 13 0 0 1 2 32 z" fill="#ffffff" fill-opacity="0.92"/>
+  </g>
+</svg>
