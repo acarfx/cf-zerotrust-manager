@@ -19,7 +19,7 @@
   "build": {
     "appId": "com.acar.cfzerotrust",
     "productName": "CF Zero Trust Manager",
-    "copyright": "Copyright (c) 2025 Acarfx",
+    "copyright": "Copyright (c) 2025–2026 Acarfx",
     "files": [
       "src/**/*",
       "build/icon.png",
@@ -33,18 +33,32 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "build/icon.png"
+      "icon": "build/icon.png",
+      "requestedExecutionLevel": "asInvoker",
+      "artifactName": "${productName} Setup ${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
+      "perMachine": false,
+      "selectPerMachineByDefault": true,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
+      "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "menuCategory": "CF Zero Trust Manager",
       "shortcutName": "CF Zero Trust Manager",
       "runAfterFinish": true,
       "deleteAppDataOnUninstall": false,
+      "unicode": true,
+      "packElevateHelper": true,
+      "warningsAsErrors": false,
+      "displayLanguageSelector": true,
+      "installerLanguages": ["tr_TR", "en_US", "ru_RU"],
+      "language": "1055",
+      "multiLanguageInstaller": true,
+      "license": "LICENSE",
+      "include": "build/installer.nsh",
+      "uninstallDisplayName": "${productName} ${version}",
       "artifactName": "${productName} Setup ${version}.${ext}"
     }
   },
