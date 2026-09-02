@@ -65,8 +65,6 @@ This app **manages** a tunnel. It does not run `cloudflared` for you — the tun
 <img width="1175" height="754" alt="image" src="https://github.com/user-attachments/assets/29a93dc8-eb84-480b-a945-059af27a5ccb" />
 <img width="1175" height="759" alt="image" src="https://github.com/user-attachments/assets/6e084c07-0510-4caf-ac64-915f925f9414" />
 
-<img width="1165" height="746" alt="image" src="https://github.com/user-attachments/assets/0dea5a88-fea3-4dfd-8b81-a833ede6c1f0" />
-<img width="1162" height="750" alt="image" src="https://github.com/user-attachments/assets/db866fec-c3fb-49d0-bf96-2305ccc870a6" />
 <img width="1169" height="750" alt="image" src="https://github.com/user-attachments/assets/b5fb3deb-200e-40ab-a842-d0b76b7b80c0" />
 <img width="1173" height="754" alt="image" src="https://github.com/user-attachments/assets/5e2405da-b28e-4cf0-b742-13e2d3999374" />
 <img width="1167" height="748" alt="image" src="https://github.com/user-attachments/assets/4b81b9c4-a384-4fa1-a6f9-a921c0895c81" />
